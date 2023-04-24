@@ -26,16 +26,14 @@ namespace prog
     return h;
   }
 
-  // TODO: remove this DUMMY_color variable once you have appropriate fields for representing image pixels.
-  Color DUMMY_color;
-
+  
   Color& Image::at(int x, int y)
-  {
-    return DUMMY_color;
+  { 
+    return pixels->at(y * w + x);
   }
 
   const Color& Image::at(int x, int y) const
   {
-    return DUMMY_color;
+    return pixels->at(y * w + x);
   }
 }

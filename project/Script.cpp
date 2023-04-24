@@ -64,6 +64,12 @@ namespace prog {
                 replace(r1, g1, b1, r2, g2, b2);
                 continue;
             }
+            if (command == "fill") {
+                int x, y, w, h, r, g, b;
+                input >> x >> y >> w >> h >> r >> g >> b;
+                fill(x, y, w, h, r, g, b);
+                continue;
+            }
             // TODO ...
 
         }
@@ -121,5 +127,14 @@ namespace prog {
                 image->at(i, j).red() = r2;
             }        
         }        
+    }
+    void Script::fill(int x, int y, int w, int h, int r, int g, int b){
+        for (int j = x; j < x+w; j++){
+            for (int i = y; i < y+h; i++){
+                image->at(j, i).blue() = b;
+                image->at(j, i).green() = g;
+                image->at(j, i).red() = r;
+             }
+        }
     }
 }

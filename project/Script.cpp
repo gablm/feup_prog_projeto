@@ -59,6 +59,8 @@ namespace prog {
                 continue;
             }
             if (command == "replace") {
+                int r1, g1, b1, r2, g2, b2;
+                input >> r1 >> g1 >> b1 >> r2 >> g2 >> b2;
                 replace(r1, g1, b1, r2, g2, b2);
                 continue;
             }

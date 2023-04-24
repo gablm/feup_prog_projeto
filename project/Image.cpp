@@ -2,40 +2,29 @@
 
 namespace prog
 {
-  Image::Image(int w, int h, const Color &fill)
-  {
+  Image::Image(int w, int h, const Color &fill){
     this->w = w;
     this->h = h;
     int filling_pixels = w * h;
     std::vector<Color> *temp = new std::vector<Color>;
-    for (int i = 1; i <= filling_pixels; i++) {
-        temp->push_back(fill);
+    for (int i = 1; i <= filling_pixels; i++){
+        temp->push_back(fill);                         // pixels.pushback(fill);
     }
     pixels = temp;
   }
-  Image::~Image()
-  {
-    delete pixels;
-  }
-  int Image::width() const
-  {
-    return w;
-  }
-  int Image::height() const
-  {
-    return h;
-  }
 
-  // TODO: remove this DUMMY_color variable once you have appropriate fields for representing image pixels.
-  Color DUMMY_color;
+  Image::~Image() { delete pixels; }
+
+  int Image::width() const { return w; }
+  int Image::height() const { return h; }
 
   Color& Image::at(int x, int y)
   {
-    return DUMMY_color;
+    return pixels->at(y*w+x); // return pixels[y*w+x];
   }
 
   const Color& Image::at(int x, int y) const
   {
-    return DUMMY_color;
+    return pixels->at(y*w+x); // return pixels[y*w+x];
   }
 }

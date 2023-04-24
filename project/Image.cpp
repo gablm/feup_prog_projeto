@@ -19,11 +19,11 @@ namespace prog
   }
   int Image::width() const
   {
-    return -1;
+    return w;
   }
   int Image::height() const
   {
-    return -1;
+    return h;
   }
 
   // TODO: remove this DUMMY_color variable once you have appropriate fields for representing image pixels.

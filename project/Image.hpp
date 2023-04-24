@@ -10,7 +10,7 @@ namespace prog
   private:
     int w;
     int h;
-    std::vector<Color> pixels;
+    std::vector<Color> *pixels;
 
   public:
     Image(int w, int h, const Color &fill = {255, 255, 255});

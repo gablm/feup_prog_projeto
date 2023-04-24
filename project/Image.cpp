@@ -7,12 +7,15 @@ namespace prog
     this->w = w;
     this->h = h;
     int filling_pixels = w * h;
+    std::vector<Color> *temp = new std::vector<Color>;
     for (int i = 1; i <= filling_pixels; i++) {
-      pixels.push_back(fill);
+        temp->push_back(fill);
     }
+    pixels = temp;
   }
   Image::~Image()
   {
+    delete pixels;
   }
   int Image::width() const
   {

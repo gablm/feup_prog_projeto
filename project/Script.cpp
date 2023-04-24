@@ -83,9 +83,13 @@ namespace prog {
         input >> filename;
         saveToPNG(filename, image);
     }
+    
     void Script::invert(){
+        // Loops thru each x and y
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
+                /* Reverts each RGB value (at, blue, green and red are all overloaded 
+                with both an mutable reference function and a function that only returns its values.) */
                 image->at(i, j).blue() = 255 - image->at(i, j).blue();
                 image->at(i, j).green() = 255 - image->at(i, j).green();
                 image->at(i, j).red() = 255 - image->at(i, j).red();

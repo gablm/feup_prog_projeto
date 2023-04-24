@@ -35,45 +35,49 @@ namespace prog {
         string command;
         while (input >> command) {
             cout << "Executing command '" << command << "' ..." << endl;
-            if (command == "open") {
+            
+            if (command == "open"){
                 open();
                 continue;
             }
-            if (command == "blank") {
+            if (command == "blank"){
                 blank();
                 continue;
             }
             // Other commands require an image to be previously loaded.
-            if (command == "save") {
+            if (command == "save"){
                 save();
                 continue;
             }
 
-            if (command == "invert") {
+            // Simple image manipulation operation command handling
+
+            if (command == "invert"){
                 invert();
                 continue;
             }
             
-            if (command == "to_gray_scale") {
+            if (command == "to_gray_scale"){
                 to_gray_scale();
                 continue;
             }
-            if (command == "replace") {
+            if (command == "replace"){
                 int r1, g1, b1, r2, g2, b2;
                 input >> r1 >> g1 >> b1 >> r2 >> g2 >> b2;
                 replace(r1, g1, b1, r2, g2, b2);
                 continue;
             }
-            if (command == "fill") {
+            if (command == "fill"){
                 int x, y, w, h, r, g, b;
                 input >> x >> y >> w >> h >> r >> g >> b;
                 fill(x, y, w, h, r, g, b);
                 continue;
             }
-            // TODO ...
+            
 
         }
     }
+
     void Script::open() {
         // Replace current image (if any) with image read from PNG file.
         clear_image_if_any();
@@ -96,19 +100,22 @@ namespace prog {
         saveToPNG(filename, image);
     }
     
+    // Simple image manipulation
+
     void Script::invert(){
-        // Loops thru each x and y
+     /* Reverts each RGB value (at, blue, green and red are all overloaded 
+        with both an mutable reference function and a function that only returns its values.) */
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
-                /* Reverts each RGB value (at, blue, green and red are all overloaded 
-                with both an mutable reference function and a function that only returns its values.) */
                 image->at(i, j).blue() = 255 - image->at(i, j).blue();
                 image->at(i, j).green() = 255 - image->at(i, j).green();
                 image->at(i, j).red() = 255 - image->at(i, j).red();
             }
         }
     }
+
     void Script::to_gray_scale(){
+        // Converts a image to its gray-scaled version
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
                 int v = (image->at(i,j).red() + image->at(i, j).green() + image->at(i, j).blue())/3;
@@ -118,7 +125,9 @@ namespace prog {
             }        
         }
     }
+
     void Script::replace(int r1, int g1, int b1, int r2, int g2, int b2){
+        // Replaces all pixels with the RGB values (r1, g1, b1) with the values (r2, g2. b2)
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
                 if(image->at(i, j).blue() != b1 || image->at(i, j).green() != g1 || image->at(i, j).red() != r1) continue;
@@ -128,7 +137,10 @@ namespace prog {
             }        
         }        
     }
+
     void Script::fill(int x, int y, int w, int h, int r, int g, int b){
+        /* Fills all pixels in a rectagle define by its top-left corner (x,y), 
+        width (w) and height (h) with the color with RGB values (r,g,b) */
         for (int j = x; j < x+w; j++){
             for (int i = y; i < y+h; i++){
                 image->at(j, i).blue() = b;

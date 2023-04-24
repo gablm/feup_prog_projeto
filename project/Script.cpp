@@ -134,7 +134,7 @@ namespace prog {
                 image->at(j, i).blue() = b;
                 image->at(j, i).green() = g;
                 image->at(j, i).red() = r;
-             }
+            }
         }
     }
 }

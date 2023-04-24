@@ -14,6 +14,7 @@ namespace prog
     ~Script();
     void run();
     void invert();
+    void to_gray_scale();
   private:
     // Current image.
     Image *image;

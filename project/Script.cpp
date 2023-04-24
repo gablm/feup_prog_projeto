@@ -58,6 +58,10 @@ namespace prog {
                 to_gray_scale();
                 continue;
             }
+            if (command == "replace") {
+                replace(r1, g1, b1, r2, g2, b2);
+                continue;
+            }
             // TODO ...
 
         }
@@ -105,5 +109,15 @@ namespace prog {
                 image->at(i, j).red() = v;
             }        
         }
+    }
+    void Script::replace(int r1, int g1, int b1, int r2, int g2, int b2){
+        for (int j = 0; j < image->height(); j++){
+            for (int i = 0; i < image->width(); i++){
+                if(image->at(i, j).blue() != b1 || image->at(i, j).green() != g1 || image->at(i, j).red() != r1) continue;
+                image->at(i, j).blue() = b2;
+                image->at(i, j).green() = g2;
+                image->at(i, j).red() = r2;
+            }        
+        }        
     }
 }

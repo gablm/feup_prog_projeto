@@ -4,6 +4,12 @@ namespace prog
 {
   Image::Image(int w, int h, const Color &fill)
   {
+    this->w = w;
+    this->h = h;
+    int filling_pixels = w * h;
+    for (int i = 1; i <= filling_pixels; i++) {
+      pixels.push_back(fill);
+    }
   }
   Image::~Image()
   {

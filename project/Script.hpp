@@ -13,6 +13,7 @@ namespace prog
     Script(const std::string &filename);
     ~Script();
     void run();
+    void invert();
   private:
     // Current image.
     Image *image;

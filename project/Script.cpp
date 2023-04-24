@@ -47,7 +47,13 @@ namespace prog {
             if (command == "save") {
                 save();
                 continue;
-            } 
+            }
+
+            if (command == "invert") {
+                invert();
+                continue;
+            }
+ 
             // TODO ...
 
         }
@@ -72,5 +78,14 @@ namespace prog {
         string filename;
         input >> filename;
         saveToPNG(filename, image);
+    }
+    void Script::invert(){
+        for (int i = 0; i < image->height(); i++){
+            for (int j = 0; j < image->width(); j++){
+                image->at(i, j).blue() = 255 - image->at(i, j).blue();
+                image->at(i, j).green() = 255 - image->at(i, j).green();
+                image->at(i, j).red() = 255 - image->at(i, j).red();
+            }
+        }
     }
 }

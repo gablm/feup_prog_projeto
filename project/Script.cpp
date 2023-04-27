@@ -62,26 +62,31 @@ namespace prog {
                 to_gray_scale();
                 continue;
             }
+
             if (command == "replace"){
                 int r1, g1, b1, r2, g2, b2;
                 input >> r1 >> g1 >> b1 >> r2 >> g2 >> b2;
                 replace(r1, g1, b1, r2, g2, b2);
                 continue;
             }
+
             if (command == "fill"){
                 int x, y, w, h, r, g, b;
                 input >> x >> y >> w >> h >> r >> g >> b;
                 fill(x, y, w, h, r, g, b);
                 continue;
             }
+
             if (command == "h_mirror"){
                 h_mirror();
                 continue;
             }
+
             if (command == "v_mirror"){
                 v_mirror();
                 continue;
             }
+
             if (command == "add"){
                 int x, y, r, g, b;
                 string nome;
@@ -89,14 +94,21 @@ namespace prog {
                 add(nome, r, g, b, x, y);
                 continue;                              
             }
+
             if (command == "crop"){
                 int x, y, w, h;
                 input >> x >> y >> w >> h;
                 crop(x, y, w, h);
                 continue;
             }
+
             if (command == "rotate_left"){
                 rotate_left();
+                continue;
+            }
+
+            if (command == "rotate_right"){
+                rotate_right();
                 continue;
             }
         }
@@ -224,6 +236,17 @@ namespace prog {
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
                 tempimage->at(j, tempimage->height() - i - 1) = image->at(i, j);
+            }
+        }
+        delete image;
+        image = tempimage;
+    }
+
+    void Script::rotate_right() {
+        Image *tempimage = new Image(image->height(), image->width());
+        for (int j = 0; j < image->height(); j++){
+            for (int i = 0; i < image->width(); i++){
+                tempimage->at(tempimage->width() - j - 1, i) = image->at(i, j);
             }
         }
         delete image;

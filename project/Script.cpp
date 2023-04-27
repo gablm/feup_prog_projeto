@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "Script.hpp"
 #include "PNG.hpp"
 #include "XPM2.hpp"
@@ -80,6 +81,13 @@ namespace prog {
             if (command == "v_mirror"){
                 v_mirror();
                 continue;
+            }
+            if (command == "add"){
+                int x, y, r, g, b;
+                string nome;
+                input >> nome >> r >> g >> b >> x >> y;
+                add(nome, r, g, b, x, y);
+                continue;                              
             }
         }
     }
@@ -179,6 +187,13 @@ namespace prog {
     }
     
     void Script::add(string filename, int r, int g, int b, int x, int y){
-        
+        Image tempimage = loadFromPNG(filename);
+        int tx = 0, ty = 0;
+        for (int j = y; j < y + tempimage->height(), j++){
+            for (int i = x; i < x + tempimage->width(); i++){
+                if(image->at(i, j).blue() == b && image->at(i, j).green() == g && image->at(i, j).red() == r) continue;
+                image->at(i, j) = tempimage->at(i-x, j-y);             
+            }
+        }
     }
 }

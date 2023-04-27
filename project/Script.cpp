@@ -41,18 +41,19 @@ namespace prog {
                 open();
                 continue;
             }
+
             if (command == "blank"){
                 blank();
                 continue;
             }
+
             // Other commands require an image to be previously loaded.
             if (command == "save"){
                 save();
                 continue;
             }
 
-            // Simple image manipulation operation command handling
-
+            // Simple image manipulation operations command handling
             if (command == "invert"){
                 invert();
                 continue;
@@ -87,6 +88,7 @@ namespace prog {
                 continue;
             }
 
+            // Dimension changing operations command handling
             if (command == "add"){
                 int x, y, r, g, b;
                 string nome;
@@ -187,7 +189,8 @@ namespace prog {
         }
     }
 
-    void Script::h_mirror(){  
+    void Script::h_mirror(){
+        // Mirrors the image horizontally  
         Color tempcolor;     
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width()/2; i++){
@@ -198,7 +201,8 @@ namespace prog {
         }          
     }
 
-    void Script::v_mirror(){  
+    void Script::v_mirror(){
+        // Mirrors the image vertically  
         Color tempcolor;     
         for (int j = 0; j < image->height()/2; j++){
             for (int i = 0; i < image->width(); i++){
@@ -210,6 +214,8 @@ namespace prog {
     }
     
     void Script::add(string filename, int r, int g, int b, int x, int y){
+        /* Copies all pixels from an image to the current image, starting in the
+        top-left corner (x,y) ignoring all pixels with the RGB value specified*/
         Image *tempimage = loadFromPNG(filename);
         for (int j = y; j < y + tempimage->height(); j++){
             for (int i = x; i < x + tempimage->width(); i++){
@@ -220,7 +226,9 @@ namespace prog {
         delete tempimage;
     }
 
-    void Script::crop(int x, int y, int w, int h) {
+    void Script::crop(int x, int y, int w, int h){
+        /* Crops an image, creating a new one based on the top-left corner position 
+        on the image and the new image's width and height */
         Image *tempimage = new Image(w, h);
         for (int j = 0; j < h; j++){
             for (int i = 0; i < w; i++){
@@ -231,7 +239,8 @@ namespace prog {
         image = tempimage;
     }
 
-    void Script::rotate_left() {
+    void Script::rotate_left(){
+        // Rotates the image left by 90 degrees
         Image *tempimage = new Image(image->height(), image->width());
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
@@ -242,7 +251,8 @@ namespace prog {
         image = tempimage;
     }
 
-    void Script::rotate_right() {
+    void Script::rotate_right(){
+        // Rotates the image right by 90 degrees
         Image *tempimage = new Image(image->height(), image->width());
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){

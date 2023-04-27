@@ -40,6 +40,9 @@ namespace prog
     void crop(int x, int y, int w, int h);
     void rotate_left();
     void rotate_right();
+
+    // Advanced funcionalities
+    void median_filter(int ws);
   };
 }
 #endif

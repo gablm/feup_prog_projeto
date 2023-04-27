@@ -206,8 +206,8 @@ namespace prog {
 
     void Script::crop(int x, int y, int w, int h) {
         Image *tempimage = new Image(w, h);
-        for (int j = 0; j < w; j++){
-            for (int i = 0; i < h; i++){
+        for (int j = 0; j < h; j++){
+            for (int i = 0; i < w; i++){
                 tempimage->at(i, j) = image->at(i+x, j+y);
             }
         }

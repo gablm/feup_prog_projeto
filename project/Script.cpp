@@ -190,9 +190,10 @@ namespace prog {
         Image *tempimage = loadFromPNG(filename);
         for (int j = y; j < y + tempimage->height(); j++){
             for (int i = x; i < x + tempimage->width(); i++){
-                if(tempimage->at(i, j).blue() == b && tempimage->at(i, j).green() == g && tempimage->at(i, j).red() == r) continue;
+                if(tempimage->at(i-x, j-y).blue() == b && tempimage->at(i-x, j-y).green() == g && tempimage->at(i-x, j-y).red() == r) continue;
                 image->at(i, j) = tempimage->at(i-x, j-y);             
             }
         }
+        delete tempimage;
     }
 }

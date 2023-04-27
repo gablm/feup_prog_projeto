@@ -34,7 +34,8 @@ namespace prog
     void fill(int x, int y, int w, int h, int r, int g, int b);
     void h_mirror();
     void v_mirror();
-    void add(string filename, int r, int g, int b, int x, int y);
+    void add(std::string filename, int r, int g, int b, int x, int y);
+
     // Dimension-changing operations
   };
 }

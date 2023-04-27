@@ -187,11 +187,10 @@ namespace prog {
     }
     
     void Script::add(string filename, int r, int g, int b, int x, int y){
-        Image tempimage = loadFromPNG(filename);
-        int tx = 0, ty = 0;
-        for (int j = y; j < y + tempimage->height(), j++){
+        Image *tempimage = loadFromPNG(filename);
+        for (int j = y; j < y + tempimage->height(); j++){
             for (int i = x; i < x + tempimage->width(); i++){
-                if(image->at(i, j).blue() == b && image->at(i, j).green() == g && image->at(i, j).red() == r) continue;
+                if(tempimage->at(i, j).blue() == b && tempimage->at(i, j).green() == g && tempimage->at(i, j).red() == r) continue;
                 image->at(i, j) = tempimage->at(i-x, j-y);             
             }
         }

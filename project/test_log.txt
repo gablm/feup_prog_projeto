@@ -1,17 +1,72 @@
->>>> [1] v_mirror1 <<<<
-Executing command 'open' ...
-Executing command 'v_mirror' ...
+>>>> [1] add1 <<<<
+Executing command 'blank' ...
+Executing command 'add' ...
 Executing command 'save' ...
->>>> [2] v_mirror2 <<<<
+
+=================================================================
+==238==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 16 byte(s) in 1 object(s) allocated from:
+    #0 0x7f3ee077e488 in operator new(unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:95
+    #1 0x560476456614 in prog::loadFromPNG(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/PNG.cpp:20
+    #2 0x560476413898 in prog::Script::add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, int, int, int, int) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Script.cpp:190
+    #3 0x56047640f3ed in prog::Script::run() /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Script.cpp:89
+    #4 0x5604763fb257 in prog::TestDriver::test_script(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x82257)
+    #5 0x5604763fc065 in prog::TestDriver::run_test(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x83065)
+    #6 0x5604763fdf11 in prog::TestDriver::test_scripts(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x84f11)
+    #7 0x5604763fa360 in main /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test.cpp:186
+    #8 0x7f3edfb7250f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Indirect leak of 393216 byte(s) in 1 object(s) allocated from:
+    #0 0x7f3ee077e488 in operator new(unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:95
+    #1 0x56047640c50b in std::__new_allocator<prog::Color>::allocate(unsigned long, void const*) /usr/include/c++/12/bits/new_allocator.h:137
+    #2 0x56047640c176 in std::allocator_traits<std::allocator<prog::Color> >::allocate(std::allocator<prog::Color>&, unsigned long) /usr/include/c++/12/bits/alloc_traits.h:464
+    #3 0x56047640bdb9 in std::_Vector_base<prog::Color, std::allocator<prog::Color> >::_M_allocate(unsigned long) /usr/include/c++/12/bits/stl_vector.h:378
+    #4 0x56047640a70f in void std::vector<prog::Color, std::allocator<prog::Color> >::_M_realloc_insert<prog::Color const&>(__gnu_cxx::__normal_iterator<prog::Color*, std::vector<prog::Color, std::allocator<prog::Color> > >, prog::Color const&) /usr/include/c++/12/bits/vector.tcc:453
+    #5 0x560476409c5c in std::vector<prog::Color, std::allocator<prog::Color> >::push_back(prog::Color const&) /usr/include/c++/12/bits/stl_vector.h:1287
+    #6 0x560476408ee2 in prog::Image::Image(int, int, prog::Color const&) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Image.cpp:18
+    #7 0x5604764566d4 in prog::loadFromPNG(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/PNG.cpp:20
+    #8 0x560476413898 in prog::Script::add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, int, int, int, int) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Script.cpp:190
+    #9 0x56047640f3ed in prog::Script::run() /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Script.cpp:89
+    #10 0x5604763fb257 in prog::TestDriver::test_script(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x82257)
+    #11 0x5604763fc065 in prog::TestDriver::run_test(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x83065)
+    #12 0x5604763fdf11 in prog::TestDriver::test_scripts(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x84f11)
+    #13 0x5604763fa360 in main /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test.cpp:186
+    #14 0x7f3edfb7250f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+Indirect leak of 24 byte(s) in 1 object(s) allocated from:
+    #0 0x7f3ee077e488 in operator new(unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:95
+    #1 0x560476408e52 in prog::Image::Image(int, int, prog::Color const&) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Image.cpp:14
+    #2 0x5604764566d4 in prog::loadFromPNG(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/PNG.cpp:20
+    #3 0x560476413898 in prog::Script::add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, int, int, int, int, int) /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Script.cpp:190
+    #4 0x56047640f3ed in prog::Script::run() /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/Script.cpp:89
+    #5 0x5604763fb257 in prog::TestDriver::test_script(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x82257)
+    #6 0x5604763fc065 in prog::TestDriver::run_test(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x83065)
+    #7 0x5604763fdf11 in prog::TestDriver::test_scripts(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (/mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test+0x84f11)
+    #8 0x5604763fa360 in main /mnt/c/Users/gabri/Documents/GitHub/prog-projeto/project/test.cpp:186
+    #9 0x7f3edfb7250f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+SUMMARY: AddressSanitizer: 393256 byte(s) leaked in 3 allocation(s).
+>>>> [2] add2 <<<<
+Executing command 'blank' ...
+Executing command 'add' ...
+Executing command 'add' ...
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  vector::_M_range_check: __n (which is 100000) >= this->size() (which is 95000)
+>>>> [3] add3 <<<<
+Executing command 'blank' ...
+Executing command 'add' ...
+Executing command 'add' ...
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  vector::_M_range_check: __n (which is 100000) >= this->size() (which is 95000)
+>>>> [4] add4 <<<<
 Executing command 'open' ...
-Executing command 'v_mirror' ...
-Executing command 'v_mirror' ...
-Executing command 'save' ...
->>>> [3] v_mirror3 <<<<
-Executing command 'open' ...
-Executing command 'v_mirror' ...
-Executing command 'save' ...
->>>> [4] v_mirror4 <<<<
-Executing command 'open' ...
-Executing command 'v_mirror' ...
-Executing command 'save' ...
+Executing command 'add' ...
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  vector::_M_range_check: __n (which is 95000) >= this->size() (which is 95000)
+>>>> [5] add5 <<<<
+Executing command 'blank' ...
+Executing command 'add' ...
+Executing command 'add' ...
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  vector::_M_range_check: __n (which is 89370) >= this->size() (which is 89370)

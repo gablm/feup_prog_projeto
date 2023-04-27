@@ -95,6 +95,10 @@ namespace prog {
                 crop(x, y, w, h);
                 continue;
             }
+            if (command == "rotate_left"){
+                rotate_left();
+                continue;
+            }
         }
     }
 
@@ -209,6 +213,17 @@ namespace prog {
         for (int j = 0; j < h; j++){
             for (int i = 0; i < w; i++){
                 tempimage->at(i, j) = image->at(i+x, j+y);
+            }
+        }
+        delete image;
+        image = tempimage;
+    }
+
+    void Script::rotate_left() {
+        Image *tempimage = new Image(image->height(), image->width());
+        for (int j = 0; j < image->height(); j++){
+            for (int i = 0; i < image->width(); i++){
+                tempimage->at(j, tempimage->height() - i - 1) = image->at(i, j);
             }
         }
         delete image;

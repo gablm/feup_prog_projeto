@@ -205,10 +205,10 @@ namespace prog {
     }
 
     void Script::crop(int x, int y, int w, int h) {
-        Image *tempimage = Image(w, h);
-        for (int j = 0; j <= w; j++){
-            for (int i = 0; i <= h; i++){
-                tempimage->at(i, j) = image->at(i, j);
+        Image *tempimage = new Image(w, h);
+        for (int j = 0; j < w; j++){
+            for (int i = 0; i < h; i++){
+                tempimage->at(i, j) = image->at(i+x, j+y);
             }
         }
         delete image;

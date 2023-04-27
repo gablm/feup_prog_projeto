@@ -89,6 +89,12 @@ namespace prog {
                 add(nome, r, g, b, x, y);
                 continue;                              
             }
+            if (command == "crop"){
+                int x, y, w, h;
+                input >> x >> y >> w >> h;
+                crop(x, y, w, h);
+                continue;
+            }
         }
     }
 

@@ -98,6 +98,7 @@ namespace prog {
         }
     }
 
+
     void Script::open() {
         // Replace current image (if any) with image read from PNG file.
         clear_image_if_any();
@@ -204,11 +205,13 @@ namespace prog {
     }
 
     void Script::crop(int x, int y, int w, int h) {
-        Image tempimage;
+        Image *tempimage = Image(w, h);
         for (int j = 0; j <= w; j++){
             for (int i = 0; i <= h; i++){
-                tempimage->at(i, j) = image(x + i, y + j)
+                tempimage->at(i, j) = image->at(i, j);
             }
         }
+        delete image;
+        image = tempimage;
     }
 }

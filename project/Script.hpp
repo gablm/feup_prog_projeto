@@ -37,7 +37,7 @@ namespace prog
     void add(std::string filename, int r, int g, int b, int x, int y);
 
     // Dimension-changing operations
-    void 
+    void crop(int x, int y, int w, int h);
   };
 }
 #endif

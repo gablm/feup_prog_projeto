@@ -73,8 +73,14 @@ namespace prog {
                 fill(x, y, w, h, r, g, b);
                 continue;
             }
-            
-
+            if (command == "h_mirror"){
+                h_mirror();
+                continue;
+            }
+            if (command == "v_mirror"){
+                v_mirror();
+                continue;
+            }
         }
     }
 
@@ -148,5 +154,31 @@ namespace prog {
                 image->at(j, i).red() = r;
             }
         }
+    }
+
+    void Script::h_mirror(){  
+        Color tempcolor;     
+        for (int j = 0; j < image->height(); j++){
+            for (int i = 0; i < image->width()/2; i++){
+                tempcolor = image->at(i,j);
+                image->at(i,j) = image->at(image->width()-i-1,j);
+                image->at(image->width()-i-1,j) = tempcolor;
+            }        
+        }          
+    }
+
+    void Script::v_mirror(){  
+        Color tempcolor;     
+        for (int j = 0; j < image->height()/2; j++){
+            for (int i = 0; i < image->width(); i++){
+                tempcolor = image->at(i,j);
+                image->at(i,j) = image->at(i,image->height()-1-j);
+                image->at(i,image->height()-1-j) = tempcolor;
+            }        
+        }          
+    }
+    
+    void Script::add(string filename, int r, int g, int b, int x, int y){
+        
     }
 }

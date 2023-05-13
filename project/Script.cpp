@@ -119,19 +119,23 @@ namespace prog {
                 int ws;
                 input >> ws;
                 median_filter(ws);
+                continue;
             }
             
             // XPM2 file loading and saving command handling
             if (command == "xpm2_open"){
+                clear_image_if_any();
                 string file;
                 input >> file;
                 image = loadFromXPM2(file);
+                continue;
             }
 
             if (command == "xpm2_save"){
                 string file;
                 input >> file;
                 saveToXPM2(file, image);
+                continue;
             }
         }
     }

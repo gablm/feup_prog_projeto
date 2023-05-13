@@ -113,6 +113,26 @@ namespace prog {
                 rotate_right();
                 continue;
             }
+
+            // Median Filter command handling
+            if (command == "median_filter"){
+                int ws;
+                input >> ws;
+                median_filter(ws);
+            }
+            
+            // XPM2 file loading and saving command handling
+            if (command == "xpm2_open"){
+                string file;
+                input >> file;
+                image = loadFromXPM2(file);
+            }
+
+            if (command == "xpm2_save"){
+                string file;
+                input >> file;
+                saveToXPM2(file, image);
+            }
         }
     }
 
@@ -261,5 +281,9 @@ namespace prog {
         }
         delete image;
         image = tempimage;
+    }
+
+    void Script::median_filter(int ws){
+
     }
 }

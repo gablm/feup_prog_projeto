@@ -301,6 +301,7 @@ namespace prog {
     }
 
     Color Script::median_color(int ws, int x, int y){
+        
         int range = (ws-1)/2;
         std::vector<Color> median;
 
@@ -313,14 +314,15 @@ namespace prog {
         }
 
         sort(median.begin(), median.end(), compareColor);
+        
         int middle = median.size() / 2;
         if (median.size() % 2 != 0){
             return median[middle-1];
         }
 
-        double red = (median[middle].red() + median[middle-1].red()) / 2;
-        double green = (median[middle].green() + median[middle-1].green()) / 2;
-        double blue = (median[middle].blue() + median[middle-1].blue()) / 2;
+        int red = (median[middle].red() + median[middle-1].red()) / 2;
+        int green = (median[middle].green() + median[middle-1].green()) / 2;
+        int blue = (median[middle].blue() + median[middle-1].blue()) / 2;
 
         return Color(red, green, blue);
     }

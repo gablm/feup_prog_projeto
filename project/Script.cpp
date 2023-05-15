@@ -290,7 +290,7 @@ namespace prog {
     }
 
     void Script::median_filter(int ws){
-        Image *tempimage = new Image(image->height(), image->width());
+        Image *tempimage = new Image(image->width(), image->height());
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
                 tempimage->at(i, j) = median_color(ws, i, j);

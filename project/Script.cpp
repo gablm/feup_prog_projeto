@@ -319,7 +319,7 @@ namespace prog {
         sort(m_g.begin(), m_g.end());
         sort(m_b.begin(), m_b.end());
 
-        int middle = median.size() / 2;
+        int middle = m_r.size() / 2;
         int red, green, blue;
 
         if (median.size() % 2 != 0){

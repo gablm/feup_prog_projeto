@@ -179,8 +179,8 @@ namespace prog {
         }
     }
 
+    // Converts a image to its gray-scaled version
     void Script::to_gray_scale(){
-        // Converts a image to its gray-scaled version
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
                 int v = (image->at(i,j).red() + image->at(i, j).green() + image->at(i, j).blue())/3;
@@ -191,8 +191,8 @@ namespace prog {
         }
     }
 
+    // Replaces all pixels with the RGB values (r1, g1, b1) with the values (r2, g2. b2)
     void Script::replace(int r1, int g1, int b1, int r2, int g2, int b2){
-        // Replaces all pixels with the RGB values (r1, g1, b1) with the values (r2, g2. b2)
         for (int j = 0; j < image->height(); j++){
             for (int i = 0; i < image->width(); i++){
                 if(image->at(i, j).blue() != b1 || image->at(i, j).green() != g1 || image->at(i, j).red() != r1) continue;
@@ -203,9 +203,9 @@ namespace prog {
         }        
     }
 
-    void Script::fill(int x, int y, int w, int h, int r, int g, int b){
-        /* Fills all pixels in a rectagle define by its top-left corner (x,y), 
+    /* Fills all pixels in a rectagle define by its top-left corner (x,y), 
         width (w) and height (h) with the color with RGB values (r,g,b) */
+    void Script::fill(int x, int y, int w, int h, int r, int g, int b){
         for (int j = x; j < x+w; j++){
             for (int i = y; i < y+h; i++){
                 image->at(j, i).blue() = b;
@@ -215,11 +215,11 @@ namespace prog {
         }
     }
 
+    // Mirrors the image horizontally
     void Script::h_mirror(){
-        // Mirrors the image horizontally  
         Color tempcolor;     
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width()/2; i++){
+        for (int i = 0; i < image->width()/2; i++){
+            for (int j = 0; j < image->height(); j++){
                 tempcolor = image->at(i,j);
                 image->at(i,j) = image->at(image->width()-i-1,j);
                 image->at(image->width()-i-1,j) = tempcolor;
@@ -227,11 +227,11 @@ namespace prog {
         }          
     }
 
-    void Script::v_mirror(){
-        // Mirrors the image vertically  
+    // Mirrors the image vertically
+    void Script::v_mirror(){    
         Color tempcolor;     
-        for (int j = 0; j < image->height()/2; j++){
-            for (int i = 0; i < image->width(); i++){
+        for (int i = 0; i < image->width(); i++){
+            for (int j = 0; j < image->height()/2; j++){
                 tempcolor = image->at(i,j);
                 image->at(i,j) = image->at(i,image->height()-1-j);
                 image->at(i,image->height()-1-j) = tempcolor;
@@ -239,12 +239,12 @@ namespace prog {
         }          
     }
     
-    void Script::add(string filename, int r, int g, int b, int x, int y){
-        /* Copies all pixels from an image to the current image, starting in the
+    /* Copies all pixels from an image to the current image, starting in the
         top-left corner (x,y) ignoring all pixels with the RGB value specified*/
+    void Script::add(string filename, int r, int g, int b, int x, int y){
         Image *tempimage = loadFromPNG(filename);
-        for (int j = y; j < y + tempimage->height(); j++){
-            for (int i = x; i < x + tempimage->width(); i++){
+        for (int i = x; i < x + tempimage->width(); i++){
+            for (int j = y; j < y + tempimage->height(); j++){
                 if(tempimage->at(i-x, j-y).blue() == b && tempimage->at(i-x, j-y).green() == g && tempimage->at(i-x, j-y).red() == r) continue;
                 image->at(i, j) = tempimage->at(i-x, j-y);             
             }
@@ -252,24 +252,24 @@ namespace prog {
         delete tempimage;
     }
 
-    void Script::crop(int x, int y, int w, int h){
-        /* Crops an image, creating a new one based on the top-left corner position 
+    /* Crops an image, creating a new one based on the top-left corner position 
         on the image and the new image's width and height */
+    void Script::crop(int x, int y, int w, int h){
         Image *tempimage = new Image(w, h);
-        for (int j = 0; j < h; j++){
-            for (int i = 0; i < w; i++){
+        for (int i = 0; i < w; i++){
+            for (int j = 0; j < h; j++){
                 tempimage->at(i, j) = image->at(i+x, j+y);
             }
         }
-        delete image;
+        clear_image_if_any();
         image = tempimage;
     }
 
+    // Rotates the image left by 90 degrees
     void Script::rotate_left(){
-        // Rotates the image left by 90 degrees
         Image *tempimage = new Image(image->height(), image->width());
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width(); i++){
+        for (int i = 0; i < image->width(); i++){
+            for (int j = 0; j < image->height(); j++){
                 tempimage->at(j, tempimage->height() - i - 1) = image->at(i, j);
             }
         }
@@ -277,29 +277,31 @@ namespace prog {
         image = tempimage;
     }
 
-    void Script::rotate_right(){
-        // Rotates the image right by 90 degrees
+    // Rotates the image right by 90 degrees
+    void Script::rotate_right(){ 
         Image *tempimage = new Image(image->height(), image->width());
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width(); i++){
+        for (int i = 0; i < image->width(); i++){
+            for (int j = 0; j < image->height(); j++){
                 tempimage->at(tempimage->width() - j - 1, i) = image->at(i, j);
             }
         }
-        delete image;
+        clear_image_if_any();
         image = tempimage;
     }
 
+    // Replaces each pixel in a image with the median color within a "ws"-side square where that pixel is its center 
     void Script::median_filter(int ws){
         Image *tempimage = new Image(image->width(), image->height());
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width(); i++){
+        for (int i = 0; i < image->width(); i++){
+            for (int j = 0; j < image->height(); j++){
                 tempimage->at(i, j) = median_color(ws, i, j);
             }
         }
-        delete image;
+        clear_image_if_any();
         image = tempimage;
     }
 
+    // Finds the median color in a range ws with the center in the coordinate (x,y)
     Color Script::median_color(int ws, int x, int y){
         
         int range = (ws-1)/2;

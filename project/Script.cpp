@@ -303,26 +303,34 @@ namespace prog {
     Color Script::median_color(int ws, int x, int y){
         
         int range = (ws-1)/2;
-        std::vector<Color> median;
+        std::vector<int> m_r; std::vector<int> m_g; std::vector<int> m_b;
 
         for(int i = x - range; i <= x + range; i++){
             for (int j = y - range; j <= y + range; j++){
                 if(i >= 0 && i < image->width() && j >= 0 && j < image->height()){
-                    median.push_back(image->at(i, j));
+                    m_r.push_back(image->at(i, j).red());
+                    m_g.push_back(image->at(i, j).green());
+                    m_b.push_back(image->at(i, j).blue());
                 }
             } 
         }
 
-        sort(median.begin(), median.end(), compareColor);
-        
-        int middle = median.size() / 2;
-        if (median.size() % 2 != 0){
-            return median[middle-1];
-        }
+        sort(m_r.begin(), m_r.end());
+        sort(m_g.begin(), m_g.end());
+        sort(m_b.begin(), m_b.end());
 
-        int red = (median[middle].red() + median[middle-1].red()) / 2;
-        int green = (median[middle].green() + median[middle-1].green()) / 2;
-        int blue = (median[middle].blue() + median[middle-1].blue()) / 2;
+        int middle = median.size() / 2;
+        int red, green, blue;
+
+        if (median.size() % 2 != 0){
+            red = m_r[middle];
+            green = m_g[middle];
+            blue = m_b[middle];
+        }else{
+            red = (m_r[middle-1] + m_r[middle]) / 2;
+            green = (m_g[middle-1] + m_g[middle]) / 2;
+            blue = (m_b[middle-1] + m_b[middle]) / 2; 
+        }
 
         return Color(red, green, blue);
     }

@@ -322,7 +322,7 @@ namespace prog {
         int middle = m_r.size() / 2;
         int red, green, blue;
 
-        if (median.size() % 2 != 0){
+        if (m_r.size() % 2 != 0){
             red = m_r[middle];
             green = m_g[middle];
             blue = m_b[middle];

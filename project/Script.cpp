@@ -167,11 +167,11 @@ namespace prog {
     
     // Simple image manipulation
 
-    void Script::invert(){
-     /* Reverts each RGB value (at, blue, green and red are all overloaded 
+    /* Reverts each RGB value (at, blue, green and red are all overloaded 
         with both an mutable reference function and a function that only returns its values.) */
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width(); i++){
+    void Script::invert(){
+        for (int i = 0; i < image->width(); i++){
+            for (int j = 0; j < image->height(); j++){
                 image->at(i, j).blue() = 255 - image->at(i, j).blue();
                 image->at(i, j).green() = 255 - image->at(i, j).green();
                 image->at(i, j).red() = 255 - image->at(i, j).red();
@@ -181,24 +181,20 @@ namespace prog {
 
     // Converts a image to its gray-scaled version
     void Script::to_gray_scale(){
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width(); i++){
+        for (int i = 0; i < image->width(); i++){
+            for (int j = 0; j < image->height(); j++){
                 int v = (image->at(i,j).red() + image->at(i, j).green() + image->at(i, j).blue())/3;
-                image->at(i, j).blue() = v;
-                image->at(i, j).green() = v;
-                image->at(i, j).red() = v;
+                image->at(i, j) = Color(v, v, v);
             }        
         }
     }
 
     // Replaces all pixels with the RGB values (r1, g1, b1) with the values (r2, g2. b2)
     void Script::replace(int r1, int g1, int b1, int r2, int g2, int b2){
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width(); i++){
+        for (int i = 0; i < image->width(); i++){
+            for (int j = 0; j < image->height(); j++){
                 if(image->at(i, j).blue() != b1 || image->at(i, j).green() != g1 || image->at(i, j).red() != r1) continue;
-                image->at(i, j).blue() = b2;
-                image->at(i, j).green() = g2;
-                image->at(i, j).red() = r2;
+                image->at(i, j) = Color(r2, g2, b2);
             }        
         }        
     }
@@ -206,11 +202,9 @@ namespace prog {
     /* Fills all pixels in a rectagle define by its top-left corner (x,y), 
         width (w) and height (h) with the color with RGB values (r,g,b) */
     void Script::fill(int x, int y, int w, int h, int r, int g, int b){
-        for (int j = x; j < x+w; j++){
-            for (int i = y; i < y+h; i++){
-                image->at(j, i).blue() = b;
-                image->at(j, i).green() = g;
-                image->at(j, i).red() = r;
+        for (int i = x; i < x+w; i++){
+            for (int j = y; j < y+h; j++){
+                image->at(i, j) = Color(r,g,b);
             }
         }
     }
@@ -303,16 +297,16 @@ namespace prog {
 
     // Finds the median color in a range ws with the center in the coordinate (x,y)
     Color Script::median_color(int ws, int x, int y){
-        
-        int range = (ws-1)/2;
+        int range = (ws-1)/2; Color tempcolor;
         std::vector<int> m_r; std::vector<int> m_g; std::vector<int> m_b;
 
         for(int i = x - range; i <= x + range; i++){
             for (int j = y - range; j <= y + range; j++){
                 if(i >= 0 && i < image->width() && j >= 0 && j < image->height()){
-                    m_r.push_back(image->at(i, j).red());
-                    m_g.push_back(image->at(i, j).green());
-                    m_b.push_back(image->at(i, j).blue());
+                    tempcolor = image->at(i, j);
+                    m_r.push_back(tempcolor.red());
+                    m_g.push_back(tempcolor.green());
+                    m_b.push_back(tempcolor.blue());
                 }
             } 
         }
@@ -320,7 +314,7 @@ namespace prog {
         sort(m_r.begin(), m_r.end());
         sort(m_g.begin(), m_g.end());
         sort(m_b.begin(), m_b.end());
-
+        
         int middle = m_r.size() / 2;
         int red, green, blue;
 

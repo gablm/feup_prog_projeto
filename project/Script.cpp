@@ -302,32 +302,35 @@ namespace prog {
 
     Color Script::median_color(int ws, int x, int y){
         int range = (ws-1)/2;
-        std::vector<Color> median;
+        std::vector<int> median_red;
+        std::vector<int> median_green;
+        std::vector<int> median_blue;
 
         for(int i = x - range; i <= x + range; i++){
             for (int j = y - range; j <= y + range; j++){
                 if(i >= 0 && i < image->width() && j >= 0 && j < image->height()){
-                    median.push_back(image->at(i, j));
+                    median_red.push_back(image->at(i, j).red());
+                    median_red.push_back(image->at(i, j).green());
+                    median_red.push_back(image->at(i, j).blue());
                 }
             } 
         }
 
-        sort(median.begin(), median.end(), compareColor);
-        int middle = median.size() / 2;
-        if (median.size() % 2 != 0){
-            return median[middle-1];
+        sort(median_red.begin(), median_red.end());
+        sort(median_green.begin(), median_green.end());
+        sort(median_blue.begin(), median_blue.end());
+        int middle = median_red.size() / 2;
+        if (median_red.size() % 2 != 0){
+            red = median_red[middle-1];
+            green = median_green[middle-1];
+            blue = median_blue[middle-1];
         }
-
-        int red = (median[middle].red() + median[middle-1].red()) / 2;
-        int green = (median[middle].green() + median[middle-1].green()) / 2;
-        int blue = (median[middle].blue() + median[middle-1].blue()) / 2;
-
+        else {
+            int red = (median_red[middle].red() + median_red[middle-1].red()) / 2;
+            int green = (median_green[middle].green() + median_green[middle-1].green()) / 2;
+            int blue = (median_blue[middle].blue() + median_blue[middle-1].blue()) / 2;
+        }
         return Color(red, green, blue);
     }
 
-    bool Script::compareColor(Color a, Color b){
-        int av = a.blue() + a.green() + a.red();
-        int bv = b.blue() + b.green() + b.red();
-        return av < bv;
-    }
 }

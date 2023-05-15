@@ -288,6 +288,30 @@ namespace prog {
     }
 
     void Script::median_filter(int ws){
+        Image *tempimage = new Image(image->height(), image->width());
+        for (int j = 0; j < image->height(); j++){
+            for (int i = 0; i < image->width(); i++){
+                tempimage->at(i, j) = median_color(ws, i, j);
+            }
+        }
+        delete image;
+        image = tempimage;
+    }
 
+    Color Script::median_color(int ws, int x, int y){
+    int range = (ws-1)/2; int red = 0, blue = 0, green = 0, pixels = 0;
+        for(int i = x - range; i <= x + range; i++){
+            for (int j = y - range; j <= y + range; j++){
+                if(i >= 0 && i < image->width() && j >= 0 && j < image->height()){
+                    Color colortemp = image->at(i, j);
+                    red += colortemp.red();
+                    blue += colortemp.blue();
+                    green += colortemp.green();
+                    pixels++;
+                }
+            } 
+        }
+        Color finalcolor(red/pixels, blue/pixels, green/pixels);
+        return finalcolor;
     }
 }

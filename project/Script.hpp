@@ -43,6 +43,7 @@ namespace prog
 
     // Advanced funcionalities
     void median_filter(int ws);
+    Color median_color(int ws, int x, int y);
   };
 }
 #endif

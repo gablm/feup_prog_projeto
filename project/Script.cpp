@@ -334,11 +334,4 @@ namespace prog {
 
         return Color(red, green, blue);
     }
-
-    bool Script::compareColor(Color a, Color b){
-        int av = a.blue() + a.green() + a.red();
-        int bv = b.blue() + b.green() + b.red();
-        return av < bv;
-    }
-
 }

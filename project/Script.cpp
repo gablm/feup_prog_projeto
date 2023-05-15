@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <algorithm>
 #include <string>
 #include "Script.hpp"
 #include "PNG.hpp"
@@ -299,19 +301,14 @@ namespace prog {
     }
 
     Color Script::median_color(int ws, int x, int y){
-    int range = (ws-1)/2; int red = 0, blue = 0, green = 0, pixels = 0;
+        int range = (ws-1)/2;
+        std::vector<Color> median;
         for(int i = x - range; i <= x + range; i++){
             for (int j = y - range; j <= y + range; j++){
                 if(i >= 0 && i < image->width() && j >= 0 && j < image->height()){
-                    Color colortemp = image->at(i, j);
-                    red += colortemp.red();
-                    blue += colortemp.blue();
-                    green += colortemp.green();
-                    pixels++;
+                    median.pushback(image->at(i, j));
                 }
             } 
         }
-        Color finalcolor(red/pixels, green/pixels, blue/pixels);
-        return finalcolor;
     }
 }

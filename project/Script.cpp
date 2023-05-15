@@ -311,7 +311,7 @@ namespace prog {
                 }
             } 
         }
-        Color finalcolor(red/pixels, blue/pixels, green/pixels);
+        Color finalcolor(red/pixels, green/pixels, blue/pixels);
         return finalcolor;
     }
 }

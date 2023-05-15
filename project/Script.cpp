@@ -303,12 +303,31 @@ namespace prog {
     Color Script::median_color(int ws, int x, int y){
         int range = (ws-1)/2;
         std::vector<Color> median;
+
         for(int i = x - range; i <= x + range; i++){
             for (int j = y - range; j <= y + range; j++){
                 if(i >= 0 && i < image->width() && j >= 0 && j < image->height()){
-                    median.pushback(image->at(i, j));
+                    median.push_back(image->at(i, j));
                 }
             } 
         }
+
+        sort(median.begin(), median.end(), compareColor);
+        int middle = median.size() / 2;
+        if (median.size() % 2 != 0){
+            return median[middle-1];
+        }
+
+        int red = (median[middle].red() + median[middle-1].red()) / 2;
+        int green = (median[middle].green() + median[middle-1].green()) / 2;
+        int blue = (median[middle].blue() + median[middle-1].blue()) / 2;
+
+        return Color(red, green, blue);
+    }
+
+    bool Script::compareColor(Color a, Color b){
+        int av = a.blue() + a.green() + a.red();
+        int bv = b.blue() + b.green() + b.red();
+        return av < bv;
     }
 }

@@ -7,7 +7,7 @@
 using namespace std;
 
 namespace prog {
-    Image* loadFromXPM2(const std::string& file) {
+    Image* loadFromXPM2(const string& file) {
         ifstream in(file);
         string line;
         getline(in, line);
@@ -48,7 +48,7 @@ namespace prog {
 
 
 
-    void saveToXPM2(const std::string& file, const Image* image) {
+    void saveToXPM2(const string& file, const Image* image) {
         ofstream out(file);
         out << "! XPM2\n";
         map <Color, char> colormap;
@@ -63,20 +63,24 @@ namespace prog {
                 }
             }
         }
-
-        out << image->width() << image->height() << colormap.size() << "1\n";
-        
+        out << image->width() << " " << image->height() << " " << colormap.size() << " 1";
         for (auto color : colormap) {
             out << color.second << " c #" << number_to_hex(color.first);
         }
-
+        for (int j = 0; j < image->height(); j++){
+            out << '\n';
+            for (int i = 0; i < image->width(); i++) {
+                map<Color, char>::iterator itr = colormap.find(image->at(i, j));
+                out << itr->second;
+            }
+        }
     }
 
     string number_to_hex(Color color) {
         ostringstream result;
-        result << std::setfill('0') << std::setw(2) << std::hex << color.red() 
-                << std::setfill('0') << std::setw(2) << std::hex << color.green() 
-                << std::setfill('0') << std::setw(2) << std::hex << color.blue();
+        result << setfill('0') << setw(2) << hex << color.red() 
+                << setfill('0') << setw(2) << hex << color.green() 
+                << setfill('0') << setw(2) << hex << color.blue();
         return result.str();
     }
 

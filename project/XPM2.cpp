@@ -7,25 +7,30 @@
 using namespace std;
 
 namespace prog {
+
+    // Loads an image in XPM2 format
     Image* loadFromXPM2(const string& file) {
-        ifstream in(file);
+        ifstream in(file); 
         string line;
         getline(in, line);
         getline(in, line);
+
         istringstream word(line);
         int width, height, colors;
         word >> width >> height >> colors;
         Image *image = new Image(width, height);
+
         map <char, Color> colormap;
-        for(int i = 0; i<colors; i++){
+        for (int i = 0; i < colors; i++){
             getline(in, line);
             istringstream word(line);
-            char c, trash;
-            string colorhex;
-            word >> c >> trash >> colorhex;
-            colormap.insert({c, hex_to_number(colorhex)});
+            char ch, skip;
+            string color_hex;
+            word >> ch >> skip >> color_hex;
+            colormap.insert({ch, hex_to_number(color_hex)});
         }
-        for(int j = 0; j < height; j++){
+
+        for (int j = 0; j < height; j++){
             getline(in, line);
             istringstream word(line);
             char a;
@@ -35,53 +40,57 @@ namespace prog {
                 image->at(i,j) = pixel->second;
             }
         }
+        
         return image;
     }
 
-    Color hex_to_number(string colorhex){
-        int red, green, blue;
-        red = stoi(colorhex.substr(1, 2), nullptr, 16);
-        green = stoi(colorhex.substr(3, 2), nullptr, 16);
-        blue = stoi(colorhex.substr(5, 2), nullptr, 16);
+    // Returns the color of an hex value in string form
+    Color hex_to_number(string color_hex){
+        int red = stoi(color_hex.substr(1, 2), nullptr, 16);
+        int green = stoi(color_hex.substr(3, 2), nullptr, 16);
+        int blue = stoi(color_hex.substr(5, 2), nullptr, 16);
         return Color(red, green, blue);
     }
 
-
-
+    // Saves an image to XPM2 format
     void saveToXPM2(const string& file, const Image* image) {
-        ofstream out(file);
-        out << "! XPM2\n";
-        map <Color, char> colormap;
-        char c = '0';
-        for (int j = 0; j < image->height(); j++){
-            for (int i = 0; i < image->width(); i++) {
-                Color temp = image->at(i, j);
-                map<Color, char>::iterator itr = colormap.find(temp);
-                if (itr != colormap.end()) {
-                    colormap.insert({temp, c});
-                    c++;
-                }
-            }
-        }
-        out << image->width() << " " << image->height() << " " << colormap.size() << " 1";
-        for (auto color : colormap) {
-            out << color.second << " c #" << number_to_hex(color.first);
-        }
-        for (int j = 0; j < image->height(); j++){
-            out << '\n';
-            for (int i = 0; i < image->width(); i++) {
-                map<Color, char>::iterator itr = colormap.find(image->at(i, j));
-                out << itr->second;
-            }
-        }
-    }
+        std::ofstream fout(file);
+        std::vector<Color> cores; char c;
+        std::vector<std::string> linhas;
 
-    string number_to_hex(Color color) {
-        ostringstream result;
-        result << setfill('0') << setw(2) << hex << color.red() 
-                << setfill('0') << setw(2) << hex << color.green() 
-                << setfill('0') << setw(2) << hex << color.blue();
-        return result.str();
+        for (int j = 0; j < image->height(); j++){
+
+            std::ostringstream out;
+
+            for (int i = 0; i < image->width(); i++){
+
+                Color cor = image->at(i, j);
+                auto itr = std::find(cores.begin(), cores.end(), cor);
+
+                if (itr == cores.end()){
+                    c = 48 + cores.size();
+                    cores.push_back(cor);
+                }else{
+                    c = 48 + itr - cores.begin(); 
+                }
+                out << c;
+            }
+
+            linhas.push_back(out.str());
+        }
+
+        fout << "! XPM2\n" << image->width() << " " << image->height() << " " << cores.size() << " 1\n";
+        char car = 48;
+        for (Color c: cores){
+            std::stringstream out;
+            out << std::setfill('0') << std::setw(2) << std::hex << (0xff & c.red()) << std::setfill('0') << std::setw(2) << (0xff & c.green()) << std::setfill('0') << std::setw(2) << (0xff & c.blue());
+            fout << car << " c #" << out.str() << "\n";
+            car++;
+        }
+        
+        for (std::string c: linhas){
+            fout << c << "\n";
+        }
     }
 
     bool operator==(const Color& a, const Color& b){

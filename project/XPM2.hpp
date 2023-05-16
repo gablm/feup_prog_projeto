@@ -5,8 +5,11 @@
 #include "Image.hpp"
 
 namespace prog {
+    // XPM2 file loading and saving
     Image* loadFromXPM2(const std::string &file);
-    Color hex_to_number(std::string colorhex);
     void saveToXPM2(const std::string& file, const Image* img);
+
+    // Auxiliar functions
+    Color hex_to_number(std::string colorhex);
 }
 #endif

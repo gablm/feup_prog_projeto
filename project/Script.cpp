@@ -300,9 +300,9 @@ namespace prog {
         int range = (ws-1)/2; Color tempcolor;
         std::vector<int> m_r; std::vector<int> m_g; std::vector<int> m_b;
 
-        for(int i = x - range; i <= x + range; i++){
+        for (int i = x - range; i <= x + range; i++){
             for (int j = y - range; j <= y + range; j++){
-                if(i >= 0 && i < image->width() && j >= 0 && j < image->height()){
+                if (i >= 0 && i < image->width() && j >= 0 && j < image->height()){
                     tempcolor = image->at(i, j);
                     m_r.push_back(tempcolor.red());
                     m_g.push_back(tempcolor.green());

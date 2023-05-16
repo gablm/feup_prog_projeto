@@ -51,35 +51,34 @@ namespace prog {
     void saveToXPM2(const std::string& file, const Image* image) {
         ofstream out(file);
         out << "! XPM2\n";
-        map <char, Color> colormap;
+        map <Color, char> colormap;
         char c = '0';
-        for (int j = 0; j < height; j++){
-            for (int i = 0; i < width; i++) {
-                if (colormap.find(image->at(i, j)) != colormap.end()) {
-                    colormap.insert({c, image->at(i, j)});
+        for (int j = 0; j < image->height(); j++){
+            for (int i = 0; i < image->width(); i++) {
+                Color temp = image->at(i, j);
+                map<Color, char>::iterator itr = colormap.find(temp);
+                if (itr != colormap.end()) {
+                    colormap.insert({temp, c});
                     c++;
                 }
             }
         }
+
         out << image->width() << image->height() << colormap.size() << "1\n";
         
-        for ({char color_id, Color color_itslf} : colormap) {
-            out << color_id << " c #" << number_to_hex(color_itslf);
+        for (auto color : colormap) {
+            out << color.second << " c #" << number_to_hex(color.first);
         }
 
     }
 
     string number_to_hex(Color color) {
-        string red, green, blue;
+        char red[2], green[2], blue[2];
         sprintf(red, "%X", color.red());
         sprintf(green, "%X", color.green());
         sprintf(blue, "%X", color.blue());
         return red + green + blue;
     }
-
-
-
-
 
     bool operator==(const Color& a, const Color& b){
         return a.blue() == b.blue() && a.green() == b.green() && a.red() == b.red();

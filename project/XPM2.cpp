@@ -7,6 +7,7 @@
 
 namespace prog {
     Image* loadFromXPM2(const std::string& file) {
+        std::ifstream in(file);
         return nullptr;
     }
 

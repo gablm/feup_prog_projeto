@@ -23,7 +23,7 @@ namespace prog {
             char c, trash;
             string colorhex;
             word >> c >> trash >> colorhex;
-            colormap.insert(c, hex_to_number(colorhex));
+            colormap.insert({c, hex_to_number(colorhex)});
         }
         for(int j = 0; j < height; j++){
             getline(in, line);
@@ -46,9 +46,15 @@ namespace prog {
         return Color(red, green, blue);
     }
 
+
+
     void saveToXPM2(const std::string& file, const Image* image) {
 
     }
+
+
+
+
 
     bool operator==(const Color& a, const Color& b){
         return a.blue() == b.blue() && a.green() == b.green() && a.red() == b.red();

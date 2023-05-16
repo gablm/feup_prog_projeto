@@ -10,6 +10,6 @@ namespace prog {
     void saveToXPM2(const std::string& file, const Image* img);
 
     // Auxiliar functions
-    Color hex_to_number(std::string colorhex);
+    Color hexToColor(std::string colorhex);
 }
 #endif

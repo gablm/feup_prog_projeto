@@ -24,10 +24,10 @@ namespace prog {
         for (int i = 0; i < colors; i++){
             getline(in, line);
             istringstream word(line);
-            char ch, skip;
+            char c, skip;
             string color_hex;
-            word >> ch >> skip >> color_hex;
-            colormap.insert({ch, hex_to_number(color_hex)});
+            word >> c >> skip >> color_hex;
+            colormap.insert({c, hexToColor(color_hex)});
         }
 
         for (int j = 0; j < height; j++){
@@ -40,12 +40,12 @@ namespace prog {
                 image->at(i,j) = pixel->second;
             }
         }
-        
+
         return image;
     }
 
     // Returns the color of an hex value in string form
-    Color hex_to_number(string color_hex){
+    Color hexToColor(string color_hex){
         int red = stoi(color_hex.substr(1, 2), nullptr, 16);
         int green = stoi(color_hex.substr(3, 2), nullptr, 16);
         int blue = stoi(color_hex.substr(5, 2), nullptr, 16);

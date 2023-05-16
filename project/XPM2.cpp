@@ -49,7 +49,7 @@ namespace prog {
 
 
     void saveToXPM2(const std::string& file, const Image* image) {
-
+        
     }
 
 

@@ -8,6 +8,7 @@ using namespace std;
 
 namespace prog {
     Image* loadFromXPM2(const std::string& file) {
+        delete image;
         ifstream in(file);
         string line;
         getline(in, line);
@@ -23,12 +24,27 @@ namespace prog {
             char c, trash;
             string colorhex;
             word >> c >> trash >> colorhex;
-            
+            colormap.insert(c, hex_to_number(colorhex));
         }
+        for(int j = 0; j < height; j++){
+            getline(in, line);
+            istringstream word(line);
+            char a;
+            for(int i = 0; i < width; i++){
+                word >> a;
+                auto pixel = colormap.find(a);
+                image->at(i,j) = pixel->second;
+            }
+        }
+        return image;
     }
 
     Color hex_to_number(string colorhex){
-        
+        int red, green, blue;
+        red = stoi(colorhex.str(1, 2), nullptr, 16);
+        green = stoi(colorhex.str(3, 2), nullptr, 16);
+        blue = stoi(colorhex.str(5, 2), nullptr, 16);
+        return Color(red, green, blue);
     }
 
     void saveToXPM2(const std::string& file, const Image* image) {

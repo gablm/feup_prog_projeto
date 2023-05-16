@@ -6,7 +6,7 @@
 
 namespace prog {
     Image* loadFromXPM2(const std::string &file);
-
+    Color hex_to_number(std::string colorhex);
     void saveToXPM2(const std::string& file, const Image* img);
 }
 #endif

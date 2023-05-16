@@ -8,7 +8,6 @@ using namespace std;
 
 namespace prog {
     Image* loadFromXPM2(const std::string& file) {
-        delete image;
         ifstream in(file);
         string line;
         getline(in, line);
@@ -41,9 +40,9 @@ namespace prog {
 
     Color hex_to_number(string colorhex){
         int red, green, blue;
-        red = stoi(colorhex.str(1, 2), nullptr, 16);
-        green = stoi(colorhex.str(3, 2), nullptr, 16);
-        blue = stoi(colorhex.str(5, 2), nullptr, 16);
+        red = stoi(colorhex.substr(1, 2), nullptr, 16);
+        green = stoi(colorhex.substr(3, 2), nullptr, 16);
+        blue = stoi(colorhex.substr(5, 2), nullptr, 16);
         return Color(red, green, blue);
     }
 

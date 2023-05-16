@@ -74,7 +74,9 @@ namespace prog {
 
     string number_to_hex(Color color) {
         ostringstream result;
-        result << std::hex << color.red() << std::hex << color.green() << std::hex << color.blue();
+        result << std::setfill('0') << std::setw(2) << std::hex << color.red() 
+                << std::setfill('0') << std::setw(2) << std::hex << color.green() 
+                << std::setfill('0') << std::setw(2) << std::hex << color.blue();
         return result.str();
     }
 

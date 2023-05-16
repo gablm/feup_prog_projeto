@@ -73,11 +73,9 @@ namespace prog {
     }
 
     string number_to_hex(Color color) {
-        char red[2], green[2], blue[2];
-        sprintf(red, "%X", color.red());
-        sprintf(green, "%X", color.green());
-        sprintf(blue, "%X", color.blue());
-        return red + green + blue;
+        ostringstream result;
+        result << std::hex << color.red() << std::hex << color.green() << std::hex << color.blue();
+        return result.str();
     }
 
     bool operator==(const Color& a, const Color& b){

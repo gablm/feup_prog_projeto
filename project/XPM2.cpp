@@ -12,15 +12,23 @@ namespace prog {
         string line;
         getline(in, line);
         getline(in, line);
-        ostringstream word(line);
+        istringstream word(line);
         int width, height, colors;
         word >> width >> height >> colors;
         Image *image = new Image(width, height);
+        map <char, Color> colormap;
         for(int i = 0; i<colors; i++){
             getline(in, line);
-            ostringstream word(line);
+            istringstream word(line);
+            char c, trash;
+            string colorhex;
+            word >> c >> trash >> colorhex;
             
         }
+    }
+
+    Color hex_to_number(string colorhex){
+        
     }
 
     void saveToXPM2(const std::string& file, const Image* image) {

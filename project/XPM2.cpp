@@ -31,7 +31,7 @@ namespace prog {
             char a;
             for(int i = 0; i < width; i++){
                 word >> a;
-                auto pixel = colormap.find(a);
+                map <char, Color>::iterator pixel = colormap.find(a);
                 image->at(i,j) = pixel->second;
             }
         }

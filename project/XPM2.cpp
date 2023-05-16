@@ -4,11 +4,23 @@
 #include <map>
 #include <iomanip>
 #include <algorithm>
+using namespace std;
 
 namespace prog {
     Image* loadFromXPM2(const std::string& file) {
-        std::ifstream in(file);
-        return nullptr;
+        ifstream in(file);
+        string line;
+        getline(in, line);
+        getline(in, line);
+        ostringstream word(line);
+        int width, height, colors;
+        word >> width >> height >> colors;
+        Image *image = new Image(width, height);
+        for(int i = 0; i<colors; i++){
+            getline(in, line);
+            ostringstream word(line);
+            
+        }
     }
 
     void saveToXPM2(const std::string& file, const Image* image) {

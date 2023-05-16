@@ -12,8 +12,8 @@ namespace prog {
     Image* loadFromXPM2(const string& file) {
         ifstream in(file); 
         string line;
-        getline(in, line);
-        getline(in, line);
+        getline(in, line); // Ignores header, always the same
+        getline(in, line); 
 
         istringstream word(line);
         int width, height, colors;
@@ -55,8 +55,8 @@ namespace prog {
     // Saves an image to XPM2 format
     void saveToXPM2(const string& file, const Image* image) {
         std::ofstream fout(file);
-        std::vector<Color> cores; char c;
-        std::vector<std::string> linhas;
+        std::vector<Color> colors; char c;
+        std::vector<std::string> lines;
 
         for (int j = 0; j < image->height(); j++){
 
@@ -64,31 +64,32 @@ namespace prog {
 
             for (int i = 0; i < image->width(); i++){
 
-                Color cor = image->at(i, j);
-                auto itr = std::find(cores.begin(), cores.end(), cor);
+                Color color = image->at(i, j);
+                auto colorIterator = std::find(colors.begin(), colors.end(), color);
 
-                if (itr == cores.end()){
-                    c = 48 + cores.size();
-                    cores.push_back(cor);
+                if (colorIterator == colors.end()){
+                    c = 48 + colors.size();
+                    colors.push_back(color);
                 }else{
-                    c = 48 + itr - cores.begin(); 
+                    c = 48 + colorIterator - colors.begin();
                 }
                 out << c;
             }
 
-            linhas.push_back(out.str());
+            lines.push_back(out.str());
         }
 
-        fout << "! XPM2\n" << image->width() << " " << image->height() << " " << cores.size() << " 1\n";
-        char car = 48;
-        for (Color c: cores){
+        // Prints the file, following the steps: Headers -> Hex-char associations -> Image Pixels
+        fout << "! XPM2\n" << image->width() << " " << image->height() << " " << colors.size() << " 1\n";
+        char ColorChar = 48;
+        for (Color c: colors){
             std::stringstream out;
             out << std::setfill('0') << std::setw(2) << std::hex << (0xff & c.red()) << std::setfill('0') << std::setw(2) << (0xff & c.green()) << std::setfill('0') << std::setw(2) << (0xff & c.blue());
-            fout << car << " c #" << out.str() << "\n";
-            car++;
+            fout << ColorChar << " c #" << out.str() << "\n";
+            ColorChar++;
         }
         
-        for (std::string c: linhas){
+        for (std::string c: lines){
             fout << c << "\n";
         }
     }

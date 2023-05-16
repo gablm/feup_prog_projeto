@@ -49,7 +49,32 @@ namespace prog {
 
 
     void saveToXPM2(const std::string& file, const Image* image) {
+        ofstream out(file);
+        out << "! XPM2\n";
+        map <char, Color> colormap;
+        char c = '0';
+        for (int j = 0; j < height; j++){
+            for (int i = 0; i < width; i++) {
+                if (colormap.find(image->at(i, j)) != colormap.end()) {
+                    colormap.insert({c, image->at(i, j)});
+                    c++;
+                }
+            }
+        }
+        out << image->width() << image->height() << colormap.size() << "1\n";
         
+        for ({char color_id, Color color_itslf} : colormap) {
+            out << color_id << " c #" << number_to_hex(color_itslf);
+        }
+
+    }
+
+    string number_to_hex(Color color) {
+        string red, green, blue;
+        sprintf(red, "%X", color.red());
+        sprintf(green, "%X", color.green());
+        sprintf(blue, "%X", color.blue());
+        return red + green + blue;
     }
 
 

@@ -1,10 +1,8 @@
 #include "Image.hpp"
 
-namespace prog
-{
+namespace prog {
   //Default constructor
-  Image::Image(int w, int h, const Color &fill)
-  { 
+  Image::Image(int w, int h, const Color &fill) {
     // Define the width and heigh of the image
     this->w = w;
     this->h = h;
@@ -23,18 +21,19 @@ namespace prog
   }
 
   //Destructor
-  Image::~Image(){ delete pixels; }
+  Image::~Image() { delete pixels; }
 
   // Accessors
   int Image::width() const { return w; }
   int Image::height() const { return h; }
 
   // Get a mutable reference of RGB values of a pixel specified by coordinates (x,y)
-  Color& Image::at(int x, int y){ 
-    return pixels->at(y * w + x); }
+  Color& Image::at(int x, int y) { 
+    return pixels->at(y * w + x);
+  }
 
   // Get the RGB values of a pixel specified by coordinates (x,y)
-  const Color& Image::at(int x, int y) const { 
+  const Color& Image::at(int x, int y) const {
     return pixels->at(y * w + x);
   }
 }

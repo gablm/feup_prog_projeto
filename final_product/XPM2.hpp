@@ -1,6 +1,5 @@
 #ifndef __prog_XPM2_hpp__
 #define __prog_XPM2_hpp__
-
 #include <string>
 #include "Image.hpp"
 

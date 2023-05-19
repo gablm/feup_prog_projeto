@@ -11,7 +11,6 @@ namespace prog {
       ~Script();
       void run();
 
-    //The image the functions will work on and the respective stream where the commands will be inserted
     private:
       // Current image
       Image *image;
